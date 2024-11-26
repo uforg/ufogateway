@@ -1,5 +1,8 @@
-# Distribution directory
+# Temporary directories
 /dist
+/temp
+/tmp
+/.task
 
 # Binaries for programs and plugins
 *.exe
