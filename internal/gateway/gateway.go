@@ -136,6 +136,7 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return err
 	}
 
+	r.URL.Path = gatewayToOriginPath(r.URL.Path, route.Endpoint)
 	r.Host = destURL.Host
 	proxy.ServeHTTP(w, r)
 

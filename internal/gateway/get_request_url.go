@@ -3,7 +3,6 @@ package gateway
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/uforg/ufogateway/internal/util/strutil"
 )
@@ -20,8 +19,7 @@ func getRequestURL(req *http.Request, route Route) (string, string) {
 	}
 
 	gatewayPath := strutil.RemoveAllLeadingSlashes(req.URL.Path)
-	originPath := strings.TrimPrefix(gatewayPath, strutil.RemoveAllLeadingSlashes(route.Endpoint))
-	originPath = strutil.RemoveAllLeadingSlashes(originPath)
+	originPath := gatewayToOriginPath(gatewayPath, route.Endpoint)
 
 	queryStr := req.URL.RawQuery
 	hasQuery := queryStr != ""
