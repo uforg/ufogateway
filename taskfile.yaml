@@ -20,6 +20,11 @@ tasks:
       - go build -o ./dist/ufogateway ./cmd/ufogateway/main.go
       - chmod +x ./dist/ufogateway
 
+  test:
+    desc: Run tests
+    cmds:
+      - go test -v ./...
+
   fixperms:
     desc: Fix project file permissions
     cmd: chmod 777 -R .
