@@ -52,6 +52,16 @@ func TestRemoveAllTrailingSlashes(t *testing.T) {
 			input:    "hello/world\\test///",
 			expected: "hello/world\\test",
 		},
+		{
+			name:     "URL with trailing slash",
+			input:    "http://example.com/",
+			expected: "http://example.com",
+		},
+		{
+			name:     "URL with multiple trailing slashes",
+			input:    "http://example.com///",
+			expected: "http://example.com",
+		},
 	}
 
 	for _, tt := range tests {
