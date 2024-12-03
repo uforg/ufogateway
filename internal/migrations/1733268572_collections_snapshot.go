@@ -701,6 +701,26 @@ func init() {
 						"required": true,
 						"system": false,
 						"type": "text"
+					},
+					{
+						"hidden": false,
+						"id": "file376926767",
+						"maxSelect": 1,
+						"maxSize": 0,
+						"mimeTypes": [
+							"image/jpeg",
+							"image/png",
+							"image/svg+xml",
+							"image/gif",
+							"image/webp"
+						],
+						"name": "avatar",
+						"presentable": false,
+						"protected": false,
+						"required": false,
+						"system": false,
+						"thumbs": null,
+						"type": "file"
 					}
 				],
 				"fileToken": {
@@ -911,7 +931,7 @@ func init() {
 					{
 						"hidden": false,
 						"id": "bool4087400498",
-						"name": "enable",
+						"name": "active",
 						"presentable": false,
 						"required": false,
 						"system": false,
