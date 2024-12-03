@@ -3,22 +3,19 @@ version: '3'
 interval: 500ms
 
 tasks:
-  dev:
-    desc: Run the UFO Gateway in development mode with hot reload
-    watch: true
-    sources:
-      - cmd/**/*.go
-      - internal/**/*.go
-    deps:
-      - build
-    cmds:
-      - ./dist/ufogateway
+  serve:
+    desc: Run the UFO Gateway in serve mode
+    cmd: go run ./cmd/ufogateway/. serve
 
   build:
     desc: Build the UFO Gateway
     cmds:
       - go build -o ./dist/ufogateway ./cmd/ufogateway/main.go
       - chmod +x ./dist/ufogateway
+
+  snapshot:
+    desc: Create a new migration file with snapshot of the current database schema
+    cmd: go run ./cmd/ufogateway/. migrate collections
 
   test:
     desc: Run tests
