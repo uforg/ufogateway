@@ -3,6 +3,10 @@ version: '3'
 interval: 500ms
 
 tasks:
+  default:
+    desc: Run the UFO Gateway in serve mode
+    cmd: task serve
+
   serve:
     desc: Run the UFO Gateway in serve mode
     cmd: go run ./cmd/ufogateway/. serve
