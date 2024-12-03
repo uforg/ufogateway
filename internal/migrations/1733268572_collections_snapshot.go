@@ -687,6 +687,20 @@ func init() {
 						"presentable": false,
 						"system": false,
 						"type": "autodate"
+					},
+					{
+						"autogeneratePattern": "",
+						"hidden": false,
+						"id": "text1579384326",
+						"max": 255,
+						"min": 0,
+						"name": "name",
+						"pattern": "",
+						"presentable": false,
+						"primaryKey": false,
+						"required": true,
+						"system": false,
+						"type": "text"
 					}
 				],
 				"fileToken": {
@@ -893,6 +907,15 @@ func init() {
 						"required": true,
 						"system": false,
 						"type": "text"
+					},
+					{
+						"hidden": false,
+						"id": "bool4087400498",
+						"name": "enable",
+						"presentable": false,
+						"required": false,
+						"system": false,
+						"type": "bool"
 					},
 					{
 						"autogeneratePattern": "",
