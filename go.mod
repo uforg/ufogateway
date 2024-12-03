@@ -3,7 +3,7 @@ module github.com/uforg/ufogateway
 go 1.23.2
 
 require (
-	github.com/google/uuid v1.6.0
+	github.com/matoous/go-nanoid/v2 v2.1.0
 	github.com/pocketbase/pocketbase v0.23.4
 	github.com/stretchr/testify v1.10.0
 )
@@ -40,6 +40,7 @@ require (
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.1 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.14.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

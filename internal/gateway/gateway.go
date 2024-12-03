@@ -8,14 +8,14 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/google/uuid"
+	"github.com/uforg/ufogateway/internal/util/randutil"
 )
 
 // Route represents a routing rule that maps a endpoint prefix to a destination URL.
 type Route struct {
-	ID        uuid.UUID // ID is the unique identifier for the route
-	Endpoint  string    // Endpoint is the prefix to match incoming requests
-	OriginURL string    // OriginURL is the destination URL to proxy requests to
+	ID        string // ID is the unique identifier for the route
+	Endpoint  string // Endpoint is the prefix to match incoming requests
+	OriginURL string // OriginURL is the destination URL to proxy requests to
 }
 
 // RouteProvider defines an interface to obtain the current list of routes.
@@ -34,9 +34,9 @@ type LogStorer interface {
 
 // RequestLog represents the data to be logged for an incoming request.
 type RequestLog struct {
-	RouteID           uuid.UUID           // Identifier of the route handling the request
+	RouteID           string              // Identifier of the route handling the request
 	Timestamp         time.Time           // Timestamp when the request was received
-	RequestID         uuid.UUID           // Unique identifier for the request
+	RequestID         string              // Unique identifier for the request
 	RequestIP         string              // IP address of the client making the request
 	RequestMethod     string              // HTTP method of the request
 	RequestGatewayURL string              // URL of the gateway receiving the request
@@ -47,10 +47,10 @@ type RequestLog struct {
 
 // ResponseLog represents the data to be logged for an outgoing response.
 type ResponseLog struct {
-	RouteID         uuid.UUID           // Identifier of the route handling the request
+	RouteID         string              // Identifier of the route handling the request
 	Timestamp       time.Time           // Timestamp when the response was sent
 	Duration        time.Duration       // Time taken to process the request
-	RequestID       uuid.UUID           // Unique identifier matching the request
+	RequestID       string              // Unique identifier matching the request
 	ResponseHeaders map[string][]string // Headers of the response
 	ResponseBody    io.Reader           // Body of the response
 }
@@ -105,7 +105,7 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requestID := uuid.New()
+	requestID := randutil.GenerateIDForPocketBase()
 	startTime := time.Now()
 
 	var reqBody bytes.Buffer
