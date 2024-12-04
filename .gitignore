@@ -6,6 +6,7 @@
 
 # Pocketbase
 /pb_data
+/ug_data
 
 # Binaries for programs and plugins
 *.exe

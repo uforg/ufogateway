@@ -23,7 +23,9 @@ func main() {
 }
 
 func start() error {
-	app := pocketbase.New()
+	app := pocketbase.NewWithConfig(pocketbase.Config{
+		DefaultDataDir: "./ug_data",
+	})
 
 	isGoRun := strings.HasPrefix(os.Args[0], os.TempDir())
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
