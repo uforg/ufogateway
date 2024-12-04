@@ -1035,7 +1035,7 @@ func init() {
 						"hidden": false,
 						"id": "number1569706847",
 						"max": null,
-						"min": null,
+						"min": 0,
 						"name": "retention_days",
 						"onlyInt": false,
 						"presentable": false,
