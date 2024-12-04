@@ -101,3 +101,25 @@ func (db *DB) StoreRequestResBody(requestID string, resBody string) error {
 
 	return db.app.Save(record)
 }
+
+func (db *DB) DeleteExpiredRequests() (int64, error) {
+	res, err := db.app.DB().
+		NewQuery(`
+			WITH requests_to_delete AS (
+				SELECT requests.id
+				FROM requests
+				INNER JOIN routes ON routes.id = requests.route
+				WHERE 
+					routes.retention_days > 0
+					AND requests.created < date('now', '-' || routes.retention_days || ' days')
+			)
+			DELETE FROM requests
+			WHERE id IN (SELECT id FROM requests_to_delete);
+		`).
+		Execute()
+	if err != nil {
+		return 0, err
+	}
+
+	return res.RowsAffected()
+}

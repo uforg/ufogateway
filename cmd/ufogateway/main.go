@@ -46,5 +46,18 @@ func start() error {
 		return se.Next()
 	})
 
+	app.Cron().MustAdd("deleteExpiredRequests", "*/10 * * * *", func() {
+		qty, err := db.DeleteExpiredRequests()
+		if err != nil {
+			app.Logger().Error(
+				"failed to delete expired requests",
+				"error", err,
+			)
+			return
+		}
+
+		app.Logger().Info("expired requests deleted", "qty", qty)
+	})
+
 	return app.Start()
 }
