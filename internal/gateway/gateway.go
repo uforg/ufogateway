@@ -130,15 +130,10 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	proxy := httputil.NewSingleHostReverseProxy(destURL)
 
-	var resBody bytes.Buffer
-	proxy.ModifyResponse = func(res *http.Response) error {
-		res.Body, err = readAndRestoreBody(res.Body, &resBody)
-		return err
-	}
-
+	customWriter := newResponseWriter(w)
 	r.URL.Path = gatewayToOriginPath(r.URL.Path, route.Endpoint)
 	r.Host = destURL.Host
-	proxy.ServeHTTP(w, r)
+	proxy.ServeHTTP(customWriter, r)
 
 	g.logStorer.StoreResponseLog(ResponseLog{
 		RouteID:         route.ID,
@@ -146,6 +141,6 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Duration:        time.Since(startTime),
 		RequestID:       requestID,
 		ResponseHeaders: cloneHeaderMap(w.Header()),
-		ResponseBody:    bytes.NewReader(resBody.Bytes()),
+		ResponseBody:    bytes.NewReader(customWriter.getBody()),
 	})
 }
