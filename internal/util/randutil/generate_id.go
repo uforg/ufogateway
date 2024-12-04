@@ -3,7 +3,8 @@ package randutil
 import gonanoid "github.com/matoous/go-nanoid/v2"
 
 const (
-	idAlphabet           = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+	// idAlphabet is the alphabet supported by PocketBase for ID generation.
+	idAlphabet           = "0123456789abcdefghijklmnopqrstuvwxyz"
 	idPocketBaseIDLength = 15
 )
 
@@ -18,7 +19,7 @@ func GenerateID(length int) string {
 //
 // It's length is 15 and it uses idAlphabet as the character set.
 //
-// With this configuration, it requires 3 Trillion IDs to have a 1%
+// With this configuration, it requires 66 Billion IDs to have a 1%
 // probability of at least one collision.
 func GenerateIDForPocketBase() string {
 	return GenerateID(idPocketBaseIDLength)
