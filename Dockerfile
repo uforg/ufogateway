@@ -15,4 +15,4 @@ RUN CGO_ENABLED=0 go build -o ./dist/ufogateway ./cmd/ufogateway/main.go
 FROM alpine:3.20
 WORKDIR /app
 COPY --from=builder /app/dist/ufogateway /app/ufogateway
-CMD ["/app/ufogateway", "serve"]
+CMD ["/app/ufogateway", "serve", "--http=0.0.0.0:8090"]
