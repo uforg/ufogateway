@@ -965,7 +965,7 @@ func init() {
 					{
 						"hidden": false,
 						"id": "bool698918580",
-						"name": "store_requests",
+						"name": "store_hits",
 						"presentable": false,
 						"required": false,
 						"system": false,
@@ -991,6 +991,18 @@ func init() {
 					},
 					{
 						"hidden": false,
+						"id": "number3084070065",
+						"max": null,
+						"min": null,
+						"name": "store_req_body_max_bytes",
+						"onlyInt": false,
+						"presentable": false,
+						"required": false,
+						"system": false,
+						"type": "number"
+					},
+					{
+						"hidden": false,
 						"id": "bool198536437",
 						"name": "store_res_headers",
 						"presentable": false,
@@ -1006,6 +1018,18 @@ func init() {
 						"required": false,
 						"system": false,
 						"type": "bool"
+					},
+					{
+						"hidden": false,
+						"id": "number812845522",
+						"max": null,
+						"min": null,
+						"name": "store_res_body_max_bytes",
+						"onlyInt": false,
+						"presentable": false,
+						"required": false,
+						"system": false,
+						"type": "number"
 					},
 					{
 						"hidden": false,
