@@ -103,7 +103,7 @@ func (db *DB) StoreRequestResBody(requestID string, resBody string) error {
 }
 
 func (db *DB) DeleteExpiredRequests() (int64, error) {
-	res, err := db.app.DB().
+	res1, err := db.app.DB().
 		NewQuery(`
 			WITH requests_to_delete AS (
 				SELECT requests.id
@@ -120,6 +120,40 @@ func (db *DB) DeleteExpiredRequests() (int64, error) {
 	if err != nil {
 		return 0, err
 	}
+	res1AffectedRows, err := res1.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
 
-	return res.RowsAffected()
+	res2, err := db.app.DB().
+		NewQuery(`
+			WITH ranked_requests AS (
+				SELECT 
+					requests.id,
+					ROW_NUMBER() OVER (
+						PARTITION BY requests.route 
+						ORDER BY requests.created DESC
+					) as rn,
+					routes.retention_hits
+				FROM requests
+				INNER JOIN routes ON routes.id = requests.route
+				WHERE routes.retention_hits > 0
+			)
+			DELETE FROM requests
+			WHERE id IN (
+				SELECT id 
+				FROM ranked_requests 
+				WHERE rn > retention_hits
+			);
+		`).
+		Execute()
+	if err != nil {
+		return 0, err
+	}
+	res2AffectedRows, err := res2.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return res1AffectedRows + res2AffectedRows, nil
 }
