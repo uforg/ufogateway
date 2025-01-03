@@ -30,9 +30,13 @@ func (rp *RouteProvider) Routes() ([]gateway.Route, error) {
 	routes := []gateway.Route{}
 	for _, route := range dbRoutes {
 		routes = append(routes, gateway.Route{
-			ID:        route.ID,
-			Endpoint:  route.Endpoint,
-			OriginURL: route.OriginURL,
+			ID:                route.ID,
+			Endpoint:          route.Endpoint,
+			OriginURL:         route.OriginURL,
+			TLSClientCert:     route.TLSClientCert,
+			TLSClientKey:      route.TLSClientKey,
+			TLSCaCert:         route.TLSCaCert,
+			TLSSkipCertVerify: route.TLSSkipCertVerify,
 		})
 	}
 

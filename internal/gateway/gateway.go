@@ -11,11 +11,15 @@ import (
 	"github.com/uforg/ufogateway/internal/util/randutil"
 )
 
-// Route represents a routing rule that maps a endpoint prefix to a destination URL.
+// Route represents a routing rule that maps an endpoint prefix to a destination URL.
 type Route struct {
-	ID        string // ID is the unique identifier for the route
-	Endpoint  string // Endpoint is the prefix to match incoming requests
-	OriginURL string // OriginURL is the destination URL to proxy requests to
+	ID                string // is the unique identifier for the route
+	Endpoint          string // is the prefix to match incoming requests
+	OriginURL         string // is the destination URL to proxy requests to
+	TLSClientCert     string // is the content of the PEM file (optional)
+	TLSClientKey      string // is the content of the key file (optional)
+	TLSCaCert         string // is the content of the CA certificate (optional)
+	TLSSkipCertVerify bool   // is a flag to skip TLS verification
 }
 
 // RouteProvider defines an interface to obtain the current list of routes.
@@ -129,6 +133,16 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	})
 
 	proxy := httputil.NewSingleHostReverseProxy(destURL)
+
+	// Configure TLS if CertPEM is available
+	if route.TLSClientCert != "" {
+		tlsConfig, err := configureTLS(route.TLSClientCert, route.TLSClientKey, route.TLSCaCert, route.TLSSkipCertVerify)
+		if err != nil {
+			http.Error(w, "Gateway Error: failed to configure TLS", http.StatusInternalServerError)
+			return
+		}
+		proxy.Transport = &http.Transport{TLSClientConfig: tlsConfig}
+	}
 
 	customWriter := newResponseWriter(w)
 	r.URL.Path = gatewayToOriginPath(r.URL.Path, route.Endpoint)

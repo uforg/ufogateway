@@ -21,6 +21,11 @@ type Route struct {
 	StoreResBody         bool      `db:"store_res_body" json:"store_res_body"`
 	StoreResBodyMaxBytes int       `db:"store_res_body_max_bytes" json:"store_res_body_max_bytes"`
 	RetentionDays        int       `db:"retention_days" json:"retention_days"`
+	RetentionHits        int       `db:"retention_hits" json:"retention_hits"`
+	TLSClientCert        string    `db:"tls_client_cert" json:"tls_client_cert"`
+	TLSClientKey         string    `db:"tls_client_key" json:"tls_client_key"`
+	TLSCaCert            string    `db:"tls_ca_cert" json:"tls_ca_cert"`
+	TLSSkipCertVerify    bool      `db:"tls_skip_cert_verify" json:"tls_skip_cert_verify"`
 	Created              time.Time `db:"created" json:"created"`
 	Updated              time.Time `db:"updated" json:"updated"`
 }
@@ -41,6 +46,11 @@ func NewRouteFromRecord(r *core.Record) Route {
 		StoreResBody:         r.GetBool("store_res_body"),
 		StoreResBodyMaxBytes: r.GetInt("store_res_body_max_bytes"),
 		RetentionDays:        r.GetInt("retention_days"),
+		RetentionHits:        r.GetInt("retention_hits"),
+		TLSClientCert:        r.GetString("tls_client_cert"),
+		TLSClientKey:         r.GetString("tls_client_key"),
+		TLSCaCert:            r.GetString("tls_ca_cert"),
+		TLSSkipCertVerify:    r.GetBool("tls_skip_cert_verify"),
 		Created:              r.GetDateTime("created").Time(),
 		Updated:              r.GetDateTime("updated").Time(),
 	}
